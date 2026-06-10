@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\MataKuliahController;
 use App\Http\Controllers\Admin\PengaturanController;
 use App\Http\Controllers\Admin\TugasController;
+use App\Http\Controllers\Mahasiswa\AbsensiController as MahasiswaAbsensiController;
+use App\Http\Controllers\Mahasiswa\DashboardController as MahasiswaDashboardController;
+use App\Http\Controllers\Mahasiswa\TugasController as MahasiswaTugasController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -17,6 +20,8 @@ Route::get('/', function () {
 // Auth
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::get('/mahasiswa/login', [AuthController::class, 'showMahasiswaLogin'])->name('mahasiswa.login');
+Route::post('/mahasiswa/login', [AuthController::class, 'mahasiswaLogin'])->name('mahasiswa.login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Dashboard
@@ -65,4 +70,15 @@ Route::middleware('role:admin')->group(function () {
 
     Route::get('/pengaturan', [PengaturanController::class, 'index'])
         ->name('admin.pengaturan.index');
+});
+
+Route::middleware('role:mahasiswa')->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+    Route::get('/dashboard', [MahasiswaDashboardController::class, 'index'])
+        ->name('dashboard');
+    Route::get('/tugas', [MahasiswaTugasController::class, 'index'])
+        ->name('tugas.index');
+    Route::post('/tugas/{tugas}/kumpul', [MahasiswaTugasController::class, 'store'])
+        ->name('tugas.store');
+    Route::get('/absensi', [MahasiswaAbsensiController::class, 'index'])
+        ->name('absensi.index');
 });

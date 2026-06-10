@@ -13,6 +13,10 @@ class AuthController extends Controller {
         return view('auth.login');
     }
 
+    public function showMahasiswaLogin() {
+        return view('auth.login-mahasiswa');
+    }
+
     public function login(Request $request) {
         $username = $request->username;
         $password = $request->password;
@@ -34,14 +38,44 @@ class AuthController extends Controller {
         }
 
         // Cek mahasiswa
-        $user = Mahasiswa::where('username', $username)->first();
+        $user = Mahasiswa::where('nama_mahasiswa', $username)->first();
         if ($user && Hash::check($password, $user->password)) {
             $request->session()->regenerate();
-            session(['role' => 'mahasiswa', 'nama' => $user->nama_mahasiswa, 'username' => $username]);
+            session([
+                'role' => 'mahasiswa',
+                'nama' => $user->nama_mahasiswa,
+                'username' => $user->nama_mahasiswa,
+                'nim' => $user->nim,
+            ]);
             return redirect()->route('mahasiswa.dashboard');
         }
 
         return back()->with('error', 'Username atau password salah.');
+    }
+
+    public function mahasiswaLogin(Request $request) {
+        $validated = $request->validate([
+            'username' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ]);
+
+        $mahasiswa = Mahasiswa::where('nama_mahasiswa', $validated['username'])->first();
+
+        if ($mahasiswa && Hash::check($validated['password'], $mahasiswa->password)) {
+            $request->session()->regenerate();
+            session([
+                'role' => 'mahasiswa',
+                'nama' => $mahasiswa->nama_mahasiswa,
+                'username' => $mahasiswa->nama_mahasiswa,
+                'nim' => $mahasiswa->nim,
+            ]);
+
+            return redirect()->route('mahasiswa.dashboard');
+        }
+
+        return back()
+            ->withInput($request->only('username'))
+            ->with('error', 'Nama lengkap atau NIM salah.');
     }
 
     public function logout(Request $request) {

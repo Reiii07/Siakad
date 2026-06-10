@@ -8,7 +8,7 @@ return new class extends Migration {
         Schema::create('mahasiswa', function (Blueprint $table) {
             $table->string('nim', 20)->primary();
             $table->string('nama_mahasiswa', 100);
-            $table->string('username', 50)->unique();
+            $table->string('username', 100)->unique();
             $table->string('password', 255);
             $table->timestamps();
         });

@@ -20,12 +20,11 @@ class MahasiswaController extends Controller
     {
         $validated = $request->validate([
             'nim' => ['required', 'string', 'max:20', 'unique:mahasiswa,nim'],
-            'nama_mahasiswa' => ['required', 'string', 'max:100'],
-            'username' => ['required', 'string', 'max:50', 'unique:mahasiswa,username'],
-            'password' => ['required', 'string', 'min:6'],
+            'nama_mahasiswa' => ['required', 'string', 'max:100', 'unique:mahasiswa,username'],
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
+        $validated['username'] = $validated['nama_mahasiswa'];
+        $validated['password'] = Hash::make($validated['nim']);
 
         Mahasiswa::create($validated);
 

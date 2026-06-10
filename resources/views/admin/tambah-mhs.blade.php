@@ -59,20 +59,13 @@
           <div class="form-group">
             <label>Nama Mahasiswa <span>*</span></label>
             <div class="input-wrap"><i class="bi bi-person"></i><input type="text" name="nama_mahasiswa" class="form-control-custom" placeholder="Nama lengkap mahasiswa" value="{{ old('nama_mahasiswa') }}" required></div>
+            <div class="form-hint">Nama lengkap ini dipakai sebagai username login mahasiswa</div>
           </div>
 
           <div class="form-group">
-            <label>Username <span>*</span></label>
-            <div class="input-wrap"><i class="bi bi-at"></i><input type="text" name="username" class="form-control-custom" placeholder="Username untuk login" value="{{ old('username') }}" required></div>
-          </div>
-
-          <div class="form-group">
-            <label>Password <span>*</span></label>
-            <div class="input-wrap"><i class="bi bi-lock"></i><input type="password" name="password" id="passInput" class="form-control-custom" placeholder="Password mahasiswa" required></div>
-            <div class="form-hint">
-              <input type="checkbox" id="showPass" onchange="document.getElementById('passInput').type = this.checked ? 'text' : 'password'" style="margin-right:4px">
-              Tampilkan password
-            </div>
+            <label>Akun Login</label>
+            <div class="input-wrap"><i class="bi bi-info-circle"></i><input type="text" class="form-control-custom" value="Username: nama lengkap, Password: NIM" readonly></div>
+            <div class="form-hint">Kredensial dibuat otomatis dari data mahasiswa</div>
           </div>
         </div>
 
