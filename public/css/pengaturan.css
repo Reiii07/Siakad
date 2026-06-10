@@ -1,0 +1,74 @@
+@import url("./dashboard.css");
+
+.pengaturan-card {
+  background: #fff;
+  border: 1px solid #e8eaf0;
+  border-radius: 14px;
+  max-width: 520px;
+  overflow: hidden;
+}
+
+.pengaturan-card-header {
+  border-bottom: 1px solid #f0f2f8;
+  padding: 18px 24px;
+}
+
+.pengaturan-card-header h2 {
+  color: #1e3a5f;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.pengaturan-card-body {
+  padding: 24px;
+}
+
+.akun-info {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.akun-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #1e3a5f;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.akun-nama {
+  color: #1e3a5f;
+  font-weight: 800;
+}
+
+.akun-role {
+  color: #6b7280;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.divider {
+  border-color: #e8eaf0;
+  margin: 22px 0;
+}
+
+.btn-logout {
+  border: 0;
+  border-radius: 10px;
+  background: #dc2626;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 11px 16px;
+  cursor: pointer;
+}

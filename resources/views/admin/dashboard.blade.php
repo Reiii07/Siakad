@@ -34,29 +34,29 @@
             </div>
 
             <div class="nav-sub" style="display:block">
-                <a href="#" class="nav-item">
+                <a href="{{ route('admin.dashboard') }}" class="nav-item">
                     <i class="bi bi-people"></i> Mahasiswa
                 </a>
 
-                <a href="#" class="nav-item">
+                <a href="{{ route('admin.dosen.index') }}" class="nav-item">
                     <i class="bi bi-person-badge"></i> Dosen
                 </a>
 
-                <a href="#" class="nav-item">
+                <a href="{{ route('admin.mata-kuliah.index') }}" class="nav-item">
                     <i class="bi bi-book"></i> Mata Kuliah
                 </a>
             </div>
         </div>
 
-        <a href="#" class="nav-item">
+        <a href="{{ route('admin.absensi.index') }}" class="nav-item">
             <i class="bi bi-calendar-check"></i> Absensi
         </a>
 
-        <a href="#" class="nav-item">
+        <a href="{{ route('admin.tugas.index') }}" class="nav-item">
             <i class="bi bi-clipboard-check"></i> Tugas
         </a>
 
-        <a href="#" class="nav-item">
+        <a href="{{ route('admin.pengaturan.index') }}" class="nav-item">
             <i class="bi bi-gear"></i> Pengaturan
         </a>
     </nav>
@@ -86,7 +86,7 @@
         <div class="page-header">
             <h1>Dashboard</h1>
 
-            <a href="#" class="btn-add">
+            <a href="{{ route('admin.mahasiswa.create') }}" class="btn-add">
                 <i class="bi bi-plus-lg"></i>
                 Tambah Mahasiswa
             </a>
