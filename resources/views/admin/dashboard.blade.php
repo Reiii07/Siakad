@@ -10,13 +10,13 @@
 
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 </head>
-<body>
+<body id="top">
 
 <aside class="sidebar">
-    <div class="sidebar-logo">
+    <a href="{{ route('admin.dashboard') }}" class="sidebar-logo">
         <div class="logo-icon">S</div>
         <span>Siakad App</span>
-    </div>
+    </a>
 
     <nav class="sidebar-nav">
         <a href="{{ route('admin.dashboard') }}" class="nav-item active">
@@ -71,12 +71,32 @@
         </div>
 
         <div class="topbar-right">
-            <div class="notif">
-                <i class="bi bi-bell"></i>
+            <div class="topbar-menu">
+            @include('admin.partials.notifications')
             </div>
 
-            <div class="avatar">
+            <div class="topbar-menu">
+            <button type="button" class="avatar" data-menu-toggle="accountMenu" aria-label="Akun">
                 {{ strtoupper(substr(session('nama', 'Admin'), 0, 1)) }}
+            </button>
+            <div class="dropdown-panel account-panel" id="accountMenu">
+                <div class="account-summary">
+                    <div class="avatar mini">{{ strtoupper(substr(session('nama', 'Admin'), 0, 1)) }}</div>
+                    <div>
+                        <div class="account-name">{{ session('nama', 'Admin') }}</div>
+                        <div class="account-role">{{ ucfirst(session('role', 'admin')) }}</div>
+                    </div>
+                </div>
+                <a href="{{ route('admin.pengaturan.index') }}" class="dropdown-link">
+                    <i class="bi bi-gear"></i> Pengaturan
+                </a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="dropdown-link danger">
+                        <i class="bi bi-box-arrow-right"></i> Keluar
+                    </button>
+                </form>
+            </div>
             </div>
         </div>
     </div>
@@ -196,6 +216,7 @@
 
 </div>
 
+<script src="{{ asset('js/admin-topbar.js') }}"></script>
 <script>
 function filterTable() {
     const input = document.getElementById('searchMhs').value.toLowerCase();
