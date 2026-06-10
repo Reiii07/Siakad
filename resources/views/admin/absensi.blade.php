@@ -8,9 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/absensi.css') }}">
 </head>
-<body>
+<body id="top">
 <aside class="sidebar">
-  <div class="sidebar-logo"><div class="logo-icon">S</div><span>Siakad App</span></div>
+  <a href="{{ route('admin.dashboard') }}" class="sidebar-logo"><div class="logo-icon">S</div><span>Siakad App</span></a>
   <nav class="sidebar-nav">
     <a href="{{ route('admin.dashboard') }}" class="nav-item"><i class="bi bi-grid"></i> Dashboard</a>
     <div class="nav-label">Akademik</div>
@@ -31,7 +31,19 @@
 <div class="main">
   <div class="topbar">
     <div class="search-box"><i class="bi bi-search"></i><input type="text" placeholder="Search..."></div>
-    <div class="topbar-right"><div class="notif"><i class="bi bi-bell"></i></div><div class="avatar">{{ strtoupper(substr(session('nama', 'Admin'), 0, 1)) }}</div></div>
+    <div class="topbar-right">
+      <div class="topbar-menu">
+        @include('admin.partials.notifications')
+      </div>
+      <div class="topbar-menu">
+        <button type="button" class="avatar" data-menu-toggle="accountMenu" aria-label="Akun">{{ strtoupper(substr(session('nama', 'Admin'), 0, 1)) }}</button>
+        <div class="dropdown-panel account-panel" id="accountMenu">
+          <div class="account-summary"><div class="avatar mini">{{ strtoupper(substr(session('nama', 'Admin'), 0, 1)) }}</div><div><div class="account-name">{{ session('nama', 'Admin') }}</div><div class="account-role">{{ ucfirst(session('role', 'admin')) }}</div></div></div>
+          <a href="{{ route('admin.pengaturan.index') }}" class="dropdown-link"><i class="bi bi-gear"></i> Pengaturan</a>
+          <form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="dropdown-link danger"><i class="bi bi-box-arrow-right"></i> Keluar</button></form>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="content">
@@ -67,14 +79,14 @@
               };
             @endphp
             <tr>
-              <td>{{ $row->tanggal->format('d/m/Y') }}</td>
-              <td>{{ $row->mahasiswa->nama_mahasiswa ?? '-' }}</td>
-              <td>{{ $row->mataKuliah->nama_mk ?? '-' }}</td>
-              <td><span class="badge-{{ $badge }}">{{ $row->status }}</span></td>
-              <td>
+                <td>{{ $row->tanggal->format('d/m/Y') }}</td>
+                <td>{{ $row->mahasiswa->nama_mahasiswa ?? '-' }}</td>
+                <td>{{ $row->mataKuliah->nama_mk ?? '-' }}</td>
+                <td><span class="badge-{{ $badge }}">{{ $row->status }}</span></td>
+                <td>
                 <form action="{{ route('admin.absensi.destroy', $row) }}" method="POST" class="delete-form" onsubmit="return confirm('Hapus data absensi ini?')">
-                  @csrf
-                  @method('DELETE')
+                    @csrf
+                    @method('DELETE')
                   <button type="submit" class="action-btn del"><i class="bi bi-trash"></i></button>
                 </form>
               </td>
@@ -145,5 +157,6 @@
     </div>
   </div>
 </div>
+<script src="{{ asset('js/admin-topbar.js') }}"></script>
 </body>
 </html>

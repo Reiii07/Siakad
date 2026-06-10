@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DosenController;
 use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\MataKuliahController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PengaturanController;
 use App\Http\Controllers\Admin\TugasController;
 use App\Http\Controllers\Mahasiswa\AbsensiController as MahasiswaAbsensiController;
@@ -28,6 +29,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware('role:admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('admin.dashboard');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])
+        ->name('admin.notifications.read-all');
 
     Route::get('/dosen', [DosenController::class, 'index'])
         ->name('admin.dosen.index');
@@ -42,6 +45,8 @@ Route::middleware('role:admin')->group(function () {
         ->name('admin.mahasiswa.create');
     Route::post('/mahasiswa', [MahasiswaController::class, 'store'])
         ->name('admin.mahasiswa.store');
+    Route::delete('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'destroy'])
+        ->name('admin.mahasiswa.destroy');
 
     Route::get('/mata-kuliah', [MataKuliahController::class, 'index'])
         ->name('admin.mata-kuliah.index');
