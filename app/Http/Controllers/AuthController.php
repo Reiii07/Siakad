@@ -20,6 +20,7 @@ class AuthController extends Controller {
         // Cek admin
         $user = Admin::where('username', $username)->first();
         if ($user && Hash::check($password, $user->password)) {
+            $request->session()->regenerate();
             session(['role' => 'admin', 'nama' => $user->nama, 'username' => $username]);
             return redirect()->route('admin.dashboard');
         }
@@ -27,6 +28,7 @@ class AuthController extends Controller {
         // Cek dosen
         $user = Dosen::where('username', $username)->first();
         if ($user && Hash::check($password, $user->password)) {
+            $request->session()->regenerate();
             session(['role' => 'dosen', 'nama' => $user->nama_dosen, 'username' => $username]);
             return redirect()->route('dosen.dashboard');
         }
@@ -34,6 +36,7 @@ class AuthController extends Controller {
         // Cek mahasiswa
         $user = Mahasiswa::where('username', $username)->first();
         if ($user && Hash::check($password, $user->password)) {
+            $request->session()->regenerate();
             session(['role' => 'mahasiswa', 'nama' => $user->nama_mahasiswa, 'username' => $username]);
             return redirect()->route('mahasiswa.dashboard');
         }
@@ -41,8 +44,10 @@ class AuthController extends Controller {
         return back()->with('error', 'Username atau password salah.');
     }
 
-    public function logout() {
-        session()->flush();
+    public function logout(Request $request) {
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect()->route('login');
     }
 }
