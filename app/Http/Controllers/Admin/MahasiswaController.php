@@ -33,4 +33,13 @@ class MahasiswaController extends Controller
             ->route('admin.dashboard')
             ->with('success', 'Mahasiswa berhasil ditambahkan!');
     }
+
+    public function destroy(Mahasiswa $mahasiswa): RedirectResponse
+    {
+        $mahasiswa->delete();
+
+        return redirect()
+            ->route('admin.dashboard')
+            ->with('success', 'Mahasiswa berhasil dihapus!');
+    }
 }

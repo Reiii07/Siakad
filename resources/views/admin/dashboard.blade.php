@@ -170,9 +170,13 @@
                                 <i class="bi bi-pencil-square"></i>
                             </a>
 
-                            <a href="#" class="action-btn del">
-                                <i class="bi bi-trash"></i>
-                            </a>
+                            <form action="{{ route('admin.mahasiswa.destroy', $row) }}" method="POST" style="display:inline" onsubmit="return confirm('Hapus mahasiswa ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="action-btn del" style="background:none;border:0">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

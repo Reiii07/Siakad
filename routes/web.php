@@ -37,6 +37,8 @@ Route::middleware('role:admin')->group(function () {
         ->name('admin.mahasiswa.create');
     Route::post('/mahasiswa', [MahasiswaController::class, 'store'])
         ->name('admin.mahasiswa.store');
+    Route::delete('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'destroy'])
+        ->name('admin.mahasiswa.destroy');
 
     Route::get('/mata-kuliah', [MataKuliahController::class, 'index'])
         ->name('admin.mata-kuliah.index');

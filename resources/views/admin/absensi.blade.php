@@ -67,14 +67,14 @@
               };
             @endphp
             <tr>
-              <td>{{ $row->tanggal->format('d/m/Y') }}</td>
-              <td>{{ $row->mahasiswa->nama_mahasiswa ?? '-' }}</td>
-              <td>{{ $row->mataKuliah->nama_mk ?? '-' }}</td>
-              <td><span class="badge-{{ $badge }}">{{ $row->status }}</span></td>
-              <td>
+                <td>{{ $row->tanggal->format('d/m/Y') }}</td>
+                <td>{{ $row->mahasiswa->nama_mahasiswa ?? '-' }}</td>
+                <td>{{ $row->mataKuliah->nama_mk ?? '-' }}</td>
+                <td><span class="badge-{{ $badge }}">{{ $row->status }}</span></td>
+                <td>
                 <form action="{{ route('admin.absensi.destroy', $row) }}" method="POST" class="delete-form" onsubmit="return confirm('Hapus data absensi ini?')">
-                  @csrf
-                  @method('DELETE')
+                    @csrf
+                    @method('DELETE')
                   <button type="submit" class="action-btn del"><i class="bi bi-trash"></i></button>
                 </form>
               </td>
