@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Login Mahasiswa - Siakad App</title>
+    <title>Login Dosen - Siakad App</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -20,33 +20,33 @@
         </div>
 
         <div class="left-body">
-            <h1>Portal Mahasiswa</h1>
-            <p>Akses dashboard akademik, absensi, dan tugas menggunakan data mahasiswa Anda.</p>
+            <h1>Portal Dosen</h1>
+            <p>Akses dashboard pengajaran, manajemen tugas, dan absensi mahasiswa Anda.</p>
         </div>
 
         <div class="left-features">
             <div class="feature-item">
-                <i class="bi bi-person-check"></i>
-                <span>Login dengan nama lengkap</span>
+                <i class="bi bi-person-badge"></i>
+                <span>Login dengan username dosen</span>
             </div>
 
             <div class="feature-item">
                 <i class="bi bi-shield-lock"></i>
-                <span>Password menggunakan NIM</span>
+                <span>Dashboard manajemen kelas</span>
             </div>
 
             <div class="feature-item">
-                <i class="bi bi-speedometer2"></i>
-                <span>Dashboard khusus mahasiswa</span>
+                <i class="bi bi-graph-up"></i>
+                <span>Kelola jadwal & absensi</span>
             </div>
         </div>
     </div>
 
     <div class="login-right">
-        <h2>Login Mahasiswa</h2>
-        <p>Masukkan nama lengkap dan NIM</p>
+        <h2>Login Dosen</h2>
+        <p>Masukkan username dan password</p>
 
-        <form method="POST" action="{{ route('mahasiswa.login.post') }}">
+        <form method="POST" action="{{ route('dosen.login.post') }}">
             @csrf
 
             @if(session('error'))
@@ -64,23 +64,23 @@
             @endif
 
             <div class="form-group">
-                <label>Nama Lengkap</label>
+                <label>Username</label>
                 <div class="input-wrap">
                     <i class="bi bi-person"></i>
-                    <input type="text" name="username" class="form-control-custom" placeholder="Contoh: Dzul Kifly Rustam" value="{{ old('username') }}" required autofocus>
+                    <input type="text" name="username" class="form-control-custom" placeholder="Masukkan username" value="{{ old('username') }}" required autofocus>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>NIM</label>
+                <label>Password</label>
                 <div class="input-wrap">
                     <i class="bi bi-lock"></i>
-                    <input type="password" name="password" id="passInput" class="form-control-custom" placeholder="Masukkan NIM" required>
+                    <input type="password" name="password" id="passInput" class="form-control-custom" placeholder="Masukkan password" required>
                 </div>
 
                 <div class="form-hint">
                     <input type="checkbox" onchange="document.getElementById('passInput').type = this.checked ? 'text' : 'password'">
-                    Tampilkan NIM
+                    Tampilkan password
                 </div>
             </div>
 

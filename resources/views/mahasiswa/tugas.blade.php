@@ -13,10 +13,11 @@
 <aside class="sidebar">
   <div class="sidebar-logo"><div class="logo-icon">S</div><span>Siakad App</span></div>
   <nav class="sidebar-nav">
-    <a href="{{ route('mahasiswa.dashboard') }}" class="nav-item"><i class="bi bi-grid"></i> Dashboard</a>
+    <a href="{{ route('mahasiswa.dashboard') }}" class="nav-item {{ request()->routeIs('mahasiswa.dashboard') ? 'active' : '' }}"><i class="bi bi-grid"></i> Dashboard</a>
     <div class="nav-label">Mahasiswa</div>
-    <a href="{{ route('mahasiswa.tugas.index') }}" class="nav-item active"><i class="bi bi-clipboard-check"></i> Tugas</a>
-    <a href="{{ route('mahasiswa.absensi.index') }}" class="nav-item"><i class="bi bi-calendar-check"></i> Absensi</a>
+    <a href="{{ route('mahasiswa.jadwal.index') }}" class="nav-item {{ request()->routeIs('mahasiswa.jadwal.index') ? 'active' : '' }}"><i class="bi bi-calendar2"></i> Jadwal</a>
+    <a href="{{ route('mahasiswa.tugas.index') }}" class="nav-item {{ request()->routeIs('mahasiswa.tugas.index') ? 'active' : '' }}"><i class="bi bi-clipboard-check"></i> Tugas</a>
+    <a href="{{ route('mahasiswa.absensi.index') }}" class="nav-item {{ request()->routeIs('mahasiswa.absensi.index') ? 'active' : '' }}"><i class="bi bi-calendar-check"></i> Absensi</a>
     <form method="POST" action="{{ route('logout') }}" style="margin-top:14px">
       @csrf
       <button type="submit" class="nav-item" style="width:100%;border:0;background:transparent">

@@ -9,6 +9,7 @@ class DatabaseSeeder extends Seeder {
             DosenSeeder::class,
             MahasiswaSeeder::class,
             MataKuliahSeeder::class,
+            JadwalKuliahSeeder::class,
             TugasSeeder::class,
             AbsensiSeeder::class,
             PengumpulanSeeder::class,

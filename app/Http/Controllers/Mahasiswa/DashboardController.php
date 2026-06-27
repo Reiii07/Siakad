@@ -7,6 +7,7 @@ use App\Models\Absensi;
 use App\Models\Mahasiswa;
 use App\Models\Pengumpulan;
 use App\Models\Tugas;
+use App\Models\JadwalKuliah; 
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -36,9 +37,13 @@ class DashboardController extends Controller
             ->get()
             ->map(function (Tugas $tugas) use ($pengumpulan) {
                 $tugas->pengumpulan_mahasiswa = $pengumpulan->get($tugas->id_tugas);
-
                 return $tugas;
             });
+
+        $jadwalKuliah = JadwalKuliah::with(['mataKuliah.dosen'])
+            ->orderByRaw("FIELD(hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu')")
+            ->orderBy('jam_mulai', 'asc')
+            ->get();
 
         return view('mahasiswa.dashboard', compact(
             'mahasiswa',
@@ -47,7 +52,8 @@ class DashboardController extends Controller
             'totalTugas',
             'totalDikumpulkan',
             'absensiTerbaru',
-            'tugas'
+            'tugas',
+            'jadwalKuliah'
         ));
     }
 }

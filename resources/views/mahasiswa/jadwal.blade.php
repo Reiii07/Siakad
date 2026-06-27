@@ -2,11 +2,12 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Absensi Mahasiswa - Siakad App</title>
+  <title>Jadwal Perkuliahan - Siakad App</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/absensi.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/jadwal.css') }}">
 </head>
 <body>
 <aside class="sidebar">
@@ -33,7 +34,47 @@
   </div>
 
   <div class="content">
-    <div class="page-header"><h1>Absensi Mahasiswa</h1></div>
+    <div class="page-header"><h1>📅 Jadwal Perkuliahan</h1></div>
+
+    @if($jadwalList->isEmpty())
+    <div class="table-card">
+      <div class="no-schedule">
+        <i class="bi bi-calendar-x"></i>
+        <p>Jadwal perkuliahan belum tersedia</p>
+      </div>
+    </div>
+    @else
+    @php
+      $hariOrder = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      $jadwalByDay = $jadwalList->groupBy('hari')->sortBy(fn($group, $key) => array_search($key, $hariOrder));
+    @endphp
+
+    <div class="schedule-days-grid">
+      @foreach($jadwalByDay as $hari => $jadwalHari)
+      <div class="schedule-day-group">
+        <div class="schedule-day-title">
+          <i class="bi bi-calendar-event"></i> {{ $hari }}
+        </div>
+        <div class="schedule-day-cards">
+          @foreach($jadwalHari as $row)
+          <div class="schedule-card {{ strtolower($hari) }}">
+            <div class="schedule-time">
+              <i class="bi bi-clock"></i> {{ \Carbon\Carbon::parse($row->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($row->jam_selesai)->format('H:i') }}
+            </div>
+            <div class="schedule-subject">{{ $row->mataKuliah->nama_mk ?? '-' }}</div>
+            <div class="schedule-lecturer">
+              <i class="bi bi-person-fill"></i> {{ $row->mataKuliah->dosen->nama_dosen ?? '-' }}
+            </div>
+            <div class="schedule-room">
+              <i class="bi bi-door-closed"></i> {{ $row->ruangan }}
+            </div>
+          </div>
+          @endforeach
+        </div>
+      </div>
+      @endforeach
+    </div>
+    @endif
 
     <div class="stats">
       <div class="stat-card"><div class="label">Hadir</div><div class="value">{{ $rekap['Hadir'] }}</div><div class="sub">Total kehadiran</div></div>
@@ -44,8 +85,8 @@
 
     <div class="table-card">
       <div class="table-card-header">
-        <h2>Riwayat Absensi</h2>
-        <form method="GET" action="{{ route('mahasiswa.absensi.index') }}" class="filter-row">
+        <h2>📋 Riwayat Absensi</h2>
+        <form method="GET" action="{{ route('mahasiswa.jadwal.index') }}" class="filter-row">
           <select name="filter_mk" class="filter-select">
             <option value="">Semua MK</option>
             @foreach($mataKuliahList as $mataKuliah)
@@ -54,7 +95,7 @@
           </select>
           <input type="date" name="filter_tgl" class="filter-select" value="{{ request('filter_tgl') }}">
           <button type="submit" class="btn-filter">Filter</button>
-          <a href="{{ route('mahasiswa.absensi.index') }}" class="btn-reset">Reset</a>
+          <a href="{{ route('mahasiswa.jadwal.index') }}" class="btn-reset">Reset</a>
         </form>
       </div>
 

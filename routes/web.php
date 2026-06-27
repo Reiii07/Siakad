@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AbsensiController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DosenController;
+use App\Http\Controllers\Mahasiswa\JadwalController;
 use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\MataKuliahController;
 use App\Http\Controllers\Admin\NotificationController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Admin\TugasController;
 use App\Http\Controllers\Mahasiswa\AbsensiController as MahasiswaAbsensiController;
 use App\Http\Controllers\Mahasiswa\DashboardController as MahasiswaDashboardController;
 use App\Http\Controllers\Mahasiswa\TugasController as MahasiswaTugasController;
+use App\Http\Controllers\Dosen\DashboardController as DosenDashboardController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -23,6 +25,8 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/mahasiswa/login', [AuthController::class, 'showMahasiswaLogin'])->name('mahasiswa.login');
 Route::post('/mahasiswa/login', [AuthController::class, 'mahasiswaLogin'])->name('mahasiswa.login.post');
+Route::get('/dosen/login', [AuthController::class, 'showDosenLogin'])->name('dosen.login');
+Route::post('/dosen/login', [AuthController::class, 'dosenLogin'])->name('dosen.login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Dashboard
@@ -80,10 +84,23 @@ Route::middleware('role:admin')->group(function () {
 Route::middleware('role:mahasiswa')->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
     Route::get('/dashboard', [MahasiswaDashboardController::class, 'index'])
         ->name('dashboard');
+    Route::get('/jadwal', [App\Http\Controllers\Mahasiswa\JadwalController::class, 'index'])
+        ->name('jadwal.index');
     Route::get('/tugas', [MahasiswaTugasController::class, 'index'])
         ->name('tugas.index');
     Route::post('/tugas/{tugas}/kumpul', [MahasiswaTugasController::class, 'store'])
         ->name('tugas.store');
     Route::get('/absensi', [MahasiswaAbsensiController::class, 'index'])
+        ->name('absensi.index');
+});
+
+Route::middleware('role:dosen')->prefix('dosen')->name('dosen.')->group(function () {
+    Route::get('/dashboard', [DosenDashboardController::class, 'index'])
+        ->name('dashboard');
+    Route::get('/jadwal', [DosenDashboardController::class, 'index'])
+        ->name('jadwal.index');
+    Route::get('/tugas', [DosenDashboardController::class, 'index'])
+        ->name('tugas.index');
+    Route::get('/absensi', [DosenDashboardController::class, 'index'])
         ->name('absensi.index');
 });

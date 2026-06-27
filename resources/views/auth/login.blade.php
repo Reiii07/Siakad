@@ -83,7 +83,8 @@
             </button>
 
             <div class="form-hint" style="margin-top:14px">
-                <a href="{{ route('mahasiswa.login') }}">Login khusus mahasiswa</a>
+                <a href="{{ route('mahasiswa.login') }}">Login khusus mahasiswa</a> | 
+                <a href="{{ route('dosen.login') }}">Login khusus dosen</a>
             </div>
         </form>
     </div>
