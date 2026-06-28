@@ -30,7 +30,7 @@
 <div class="main">
   <div class="topbar">
     <div class="search-box"><i class="bi bi-person"></i><input type="text" value="{{ session('nama') }}" readonly></div>
-    <div class="topbar-right"><div class="notif"><i class="bi bi-bell"></i></div><div class="avatar">{{ strtoupper(substr(session('nama', 'M'), 0, 1)) }}</div></div>
+    <div class="topbar-right"><div class="notif"><i class="bi bi-bell"></i></div><a href="{{ route('mahasiswa.profil.index') }}" class="avatar" style="text-decoration:none">{{ strtoupper(substr(session('nama', 'M'), 0, 1)) }}</a></div>
   </div>
 
   <div class="content">

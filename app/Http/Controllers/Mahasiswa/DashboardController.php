@@ -56,4 +56,54 @@ class DashboardController extends Controller
             'jadwalKuliah'
         ));
     }
+
+    public function profil(Request $request)
+    {
+        $nim = $request->session()->get('nim');
+        $mahasiswa = Mahasiswa::where('nim', $nim)->firstOrFail();
+
+        // Tampilkan mata kuliah/jadwal yang tersedia (berdasarkan jadwal_kuliah)
+        // Catatan: database saat ini belum memodelkan KRS/KRS_per_mahasiswa.
+        $jadwalKuliah = JadwalKuliah::with('mataKuliah')
+            ->orderByRaw("FIELD(hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu')")
+            ->orderBy('jam_mulai', 'asc')
+            ->get();
+
+        return view('mahasiswa.profil', compact('mahasiswa', 'jadwalKuliah'));
+    }
+
+    public function profilUpdate(Request $request)
+    {
+        $nim = $request->session()->get('nim');
+        $mahasiswa = Mahasiswa::where('nim', $nim)->firstOrFail();
+
+        $validated = $request->validate([
+            'nama_mahasiswa' => ['required', 'string', 'max:100'],
+            'username' => ['required', 'string', 'max:100', 'unique:mahasiswa,username,' . $mahasiswa->nim . ',nim'],
+            'password_baru' => ['nullable', 'string', 'min:6', 'max:255'],
+            'password_konfirmasi' => ['nullable', 'string'],
+        ], [
+            'username.unique' => 'Username sudah dipakai mahasiswa lain.',
+        ]);
+
+        $mahasiswa->nama_mahasiswa = $validated['nama_mahasiswa'];
+        $mahasiswa->username = $validated['username'];
+
+        $passwordBaru = $request->input('password_baru');
+        $passwordKonfirmasi = $request->input('password_konfirmasi');
+
+        if (!empty($passwordBaru) || !empty($passwordKonfirmasi)) {
+            $request->validate([
+                'password_baru' => ['required', 'string', 'min:6'],
+                'password_konfirmasi' => ['required', 'string', 'min:6', 'same:password_baru'],
+            ]);
+
+            $mahasiswa->password = \Illuminate\Support\Facades\Hash::make($passwordBaru);
+        }
+
+        $mahasiswa->save();
+
+        return redirect()->route('mahasiswa.profil.index')
+            ->with('success', 'Profil berhasil diperbarui.');
+    }
 }

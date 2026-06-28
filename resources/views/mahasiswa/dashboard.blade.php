@@ -30,6 +30,7 @@
         <i class="bi bi-calendar-event"></i> Jadwal Kuliah
         </a>
 
+
         <a href="{{ route('mahasiswa.tugas.index') }}" class="nav-item">
             <i class="bi bi-clipboard-check"></i> Tugas
         </a>
@@ -39,6 +40,7 @@
         </a>
 
         <form method="POST" action="{{ route('logout') }}" style="margin-top:14px">
+
             @csrf
             <button type="submit" class="nav-item" style="width:100%;border:0;background:transparent">
                 <i class="bi bi-box-arrow-left"></i> Logout
@@ -59,9 +61,9 @@
                 <i class="bi bi-bell"></i>
             </div>
 
-            <div class="avatar">
+            <a href="{{ route('mahasiswa.profil.index') }}" class="avatar" style="text-decoration:none">
                 {{ strtoupper(substr($mahasiswa->nama_mahasiswa, 0, 1)) }}
-            </div>
+            </a>
         </div>
     </div>
 

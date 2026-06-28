@@ -84,6 +84,12 @@ Route::middleware('role:admin')->group(function () {
 Route::middleware('role:mahasiswa')->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
     Route::get('/dashboard', [MahasiswaDashboardController::class, 'index'])
         ->name('dashboard');
+
+    Route::get('/profil', [MahasiswaDashboardController::class, 'profil'])
+        ->name('profil.index');
+    Route::post('/profil', [MahasiswaDashboardController::class, 'profilUpdate'])
+        ->name('profil.update');
+
     Route::get('/jadwal', [App\Http\Controllers\Mahasiswa\JadwalController::class, 'index'])
         ->name('jadwal.index');
     Route::get('/tugas', [MahasiswaTugasController::class, 'index'])
