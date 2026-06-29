@@ -61,9 +61,36 @@
                 <i class="bi bi-bell"></i>
             </div>
 
-            <a href="{{ route('mahasiswa.profil.index') }}" class="avatar" style="text-decoration:none">
+            {{-- Klik avatar: pilih Edit Profil atau Keluar --}}
+            <button type="button" class="avatar" onclick="document.getElementById('accountConfirm').style.display='block'">
                 {{ strtoupper(substr($mahasiswa->nama_mahasiswa, 0, 1)) }}
-            </a>
+            </button>
+
+            <div id="accountConfirm" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:9999;">
+                <div style="max-width:420px;margin:12vh auto;background:#fff;border-radius:14px;padding:18px 18px;box-shadow:0 10px 30px rgba(0,0,0,.2)">
+                    <div style="font-weight:800;font-size:16px">Akun</div>
+                    <div style="color:#6b7280;font-size:13px;margin-top:6px">Pilih tindakan untuk akun Anda</div>
+
+                    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+                        <a href="{{ route('mahasiswa.profil.index') }}" class="btn-add" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;background:#111827;color:#fff;border-radius:10px;padding:10px 14px">
+                            <i class="bi bi-pencil-square"></i> Edit Profil
+                        </a>
+
+                        <form method="POST" action="{{ route('logout') }}" onsubmit="return confirm('Anda yakin ingin log out?')" style="margin:0">
+                            @csrf
+                            <button type="submit" class="btn-add" style="background:#fff;color:#111827;border:1px solid #e5e7eb;border-radius:10px;padding:10px 14px;display:inline-flex;align-items:center;gap:8px">
+                                <i class="bi bi-box-arrow-left"></i> Log out
+                            </button>
+                        </form>
+
+                        <button type="button" class="btn-add" onclick="document.getElementById('accountConfirm').style.display='none'" style="background:#f3f4f6;color:#111827;border-radius:10px;padding:10px 14px;border:0;display:inline-flex;align-items:center;gap:8px">
+                            Batal
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {{-- pastikan profil aktif di menu sidebar --}}
         </div>
     </div>
 

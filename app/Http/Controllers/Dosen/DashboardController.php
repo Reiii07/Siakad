@@ -40,7 +40,7 @@ class DashboardController extends Controller
             $totalTugas = 0;
             $totalAbsensi = 0;
         } else {
-            // Get jadwal mengajar
+            // Get jadwal mengajar berdasarkan id_mk yang diampu dosen
             $jadwalKuliah = JadwalKuliah::whereIn('id_mk', $mata_kuliah_ids)
                 ->with('mataKuliah')
                 ->orderBy('jam_mulai')

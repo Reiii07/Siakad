@@ -12,7 +12,7 @@ class JadwalKuliah extends Model
 
     protected $table = 'jadwal_kuliah';
     protected $primaryKey = 'id_jadwal';
-    protected $fillable = ['id_mk', 'hari', 'jam_mulai', 'jam_selesai', 'ruangan'];
+    protected $fillable = ['id_mk', 'nip_dosen', 'hari', 'jam_mulai', 'jam_selesai', 'ruangan'];
 
     // Relasi: Menghubungkan jadwal ke data mata kuliah
     public function mataKuliah(): BelongsTo

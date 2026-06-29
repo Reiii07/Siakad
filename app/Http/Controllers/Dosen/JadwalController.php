@@ -20,8 +20,8 @@ class JadwalController extends Controller
             ->orderBy('nama_mk')
             ->get();
 
-        $jadwalKuliah = JadwalKuliah::with('mataKuliah')
-            ->whereIn('id_mk', $mataKuliahList->pluck('id_mk'))
+        $jadwalKuliah = JadwalKuliah::whereIn('id_mk', $mataKuliahList->pluck('id_mk')->toArray())
+            ->with('mataKuliah')
             ->orderBy('hari')
             ->orderBy('jam_mulai')
             ->get();
