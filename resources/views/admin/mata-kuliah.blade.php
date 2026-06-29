@@ -114,15 +114,30 @@
               <div class="field-hint">{{ $editData ? 'ID tidak dapat diubah agar data akademik tetap terhubung.' : 'ID otomatis dibuat saat mata kuliah disimpan.' }}</div>
             </div>
 
+            @unless($editData)
+              <div class="form-group">
+                <label>Pilih Mata Kuliah yang Sudah Ada</label>
+                <select id="existingMataKuliah" class="form-control-custom">
+                  <option value="">Mata Kuliah</option>
+                  @foreach($mataKuliahList->pluck('nama_mk')->unique()->sort()->values() as $namaMataKuliah)
+                    <option value="{{ $namaMataKuliah }}" @selected(old('nama_mk') === $namaMataKuliah)>
+                      {{ $namaMataKuliah }}
+                    </option>
+                  @endforeach
+                </select>
+                <div class="field-hint">Pilih nama yang sudah ada untuk menambahkan pengampu lain, atau kosongkan jika ingin membuat nama baru.</div>
+              </div>
+            @endunless
+
             <div class="form-group">
               <label>Nama Mata Kuliah <span>*</span></label>
-              <div class="input-wrap"><i class="bi bi-book"></i><input type="text" name="nama_mk" class="form-control-custom" value="{{ old('nama_mk', $editData->nama_mk ?? '') }}" required></div>
+              <div class="input-wrap"><i class="bi bi-book"></i><input type="text" id="namaMkInput" name="nama_mk" class="form-control-custom" value="{{ old('nama_mk', $editData->nama_mk ?? '') }}" required></div>
             </div>
 
             <div class="form-group">
               <label>Dosen Pengampu <span>*</span></label>
               <select name="nip_dosen" class="form-control-custom" required>
-                <option value="">-- Pilih Dosen --</option>
+                <option value="">Pilih Dosen</option>
                 @foreach($dosenList as $dosen)
                   <option value="{{ $dosen->nip }}" @selected(old('nip_dosen', $editData->nip_dosen ?? '') === $dosen->nip)>
                     {{ $dosen->nama_dosen }} ({{ $dosen->mata_kuliah_count }} MK)
@@ -178,5 +193,17 @@
   </div>
 </div>
 <script src="{{ asset('js/admin-topbar.js') }}"></script>
+<script>
+const existingMataKuliah = document.getElementById('existingMataKuliah');
+const namaMkInput = document.getElementById('namaMkInput');
+
+if (existingMataKuliah && namaMkInput) {
+  existingMataKuliah.addEventListener('change', () => {
+    if (existingMataKuliah.value) {
+      namaMkInput.value = existingMataKuliah.value;
+    }
+  });
+}
+</script>
 </body>
 </html>

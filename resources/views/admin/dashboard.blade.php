@@ -100,7 +100,7 @@
     <div class="content">
 
         <div class="page-header">
-            <h1>Dashboard</h1>
+            <h1>Dashboard Admin</h1>
 
             <div style="display:flex;gap:10px;flex-wrap:wrap">
                 <a href="{{ route('admin.mahasiswa.create') }}" class="btn-add">

@@ -29,8 +29,9 @@ class JadwalKuliahController extends Controller
         $mataKuliahList = MataKuliah::with('dosen')
             ->orderBy('nama_mk')
             ->get();
+        $ruanganList = $this->ruanganOptions();
 
-        return view('admin.jadwal-kuliah', compact('jadwalList', 'dosenList', 'mataKuliahList', 'editData'));
+        return view('admin.jadwal-kuliah', compact('jadwalList', 'dosenList', 'mataKuliahList', 'ruanganList', 'editData'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -75,10 +76,33 @@ class JadwalKuliahController extends Controller
             'hari' => ['required', Rule::in(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'])],
             'jam_mulai' => ['required', 'date_format:H:i'],
             'jam_selesai' => ['required', 'date_format:H:i', 'after:jam_mulai'],
-            'ruangan' => ['required', 'string', 'max:50'],
+            'ruangan' => ['required', 'string', 'max:50', Rule::in($this->ruanganOptions())],
         ], [
             'id_mk.exists' => 'Mata kuliah harus sesuai dengan dosen yang dipilih.',
             'jam_selesai.after' => 'Jam selesai harus lebih besar dari jam mulai.',
+            'ruangan.in' => 'Ruangan harus dipilih dari daftar yang tersedia.',
         ]);
+    }
+
+    private function ruanganOptions(): array
+    {
+        $defaultRuangan = [
+            'Ruang 101',
+            'Ruang 202',
+            'LT-201',
+            'LT-203',
+            'LT-205',
+            'LT4-RUANG-01',
+            'LAB.204',
+            'LAB.204/205',
+        ];
+
+        return collect($defaultRuangan)
+            ->merge(JadwalKuliah::query()->distinct()->pluck('ruangan'))
+            ->filter()
+            ->unique()
+            ->sort()
+            ->values()
+            ->all();
     }
 }

@@ -113,7 +113,7 @@
             <div class="form-group">
               <label>Dosen <span>*</span></label>
               <select name="nip_dosen" id="nipDosen" class="form-control-custom" required>
-                <option value="">-- Pilih Dosen --</option>
+                <option value="">Pilih Dosen</option>
                 @foreach($dosenList as $dosen)
                   <option value="{{ $dosen->nip }}" @selected(old('nip_dosen', $editData->nip_dosen ?? '') === $dosen->nip)>{{ $dosen->nama_dosen }}</option>
                 @endforeach
@@ -123,7 +123,7 @@
             <div class="form-group">
               <label>Mata Kuliah <span>*</span></label>
               <select name="id_mk" id="idMk" class="form-control-custom" required>
-                <option value="">-- Pilih Mata Kuliah --</option>
+                <option value="">Pilih Mata Kuliah</option>
                 @foreach($mataKuliahList as $mataKuliah)
                   <option value="{{ $mataKuliah->id_mk }}" data-dosen="{{ $mataKuliah->nip_dosen }}" @selected(old('id_mk', $editData->id_mk ?? '') === $mataKuliah->id_mk)>
                     {{ $mataKuliah->nama_mk }}
@@ -154,7 +154,14 @@
 
             <div class="form-group">
               <label>Ruangan <span>*</span></label>
-              <div class="input-wrap"><i class="bi bi-door-closed"></i><input type="text" name="ruangan" class="form-control-custom" value="{{ old('ruangan', $editData->ruangan ?? '') }}" placeholder="Contoh: LAB.204" required></div>
+              <select name="ruangan" class="form-control-custom" required>
+                <option value="">Pilih Ruangan</option>
+                @foreach($ruanganList as $ruangan)
+                  <option value="{{ $ruangan }}" @selected(old('ruangan', $editData->ruangan ?? '') === $ruangan)>
+                    {{ $ruangan }}
+                  </option>
+                @endforeach
+              </select>
             </div>
           </div>
 
