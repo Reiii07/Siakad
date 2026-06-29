@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Logout - Siakad App</title>
+  <title>Logout - SiaCentral</title>
 </head>
 <body>
   <form method="POST" action="{{ route('logout') }}">

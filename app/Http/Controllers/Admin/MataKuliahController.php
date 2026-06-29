@@ -56,6 +56,7 @@ class MataKuliahController extends Controller
         ]);
 
         $mataKuliah->update($validated);
+        $mataKuliah->jadwalKuliah()->update(['nip_dosen' => $validated['nip_dosen']]);
 
         return redirect()
             ->route('admin.mata-kuliah.index')

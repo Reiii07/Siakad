@@ -15,19 +15,17 @@ class RestoreDataSeeder extends Seeder
     {
         // Insert Dosen
         $dosens = [
-            ['nip' => '198501011985', 'nama_dosen' => 'Jeffry Riswandi', 'username' => 'jeffry', 'password' => bcrypt('jeffry')],
+            ['nip' => '198501011985', 'nama_dosen' => 'Jeffry/Riswandi', 'username' => 'jeffry', 'password' => bcrypt('jeffry')],
             ['nip' => '198502011986', 'nama_dosen' => 'Naili Suri Intizhami', 'username' => 'naili', 'password' => bcrypt('naili')],
             ['nip' => '198503011987', 'nama_dosen' => 'Mardiyah Rafrin', 'username' => 'mardiyah', 'password' => bcrypt('mardiyah')],
             ['nip' => '198504011988', 'nama_dosen' => 'Ahmad Yasim', 'username' => 'ahmad', 'password' => bcrypt('ahmad')],
             ['nip' => '198505011989', 'nama_dosen' => 'Putri Ayu Maharani', 'username' => 'putri', 'password' => bcrypt('putri')],
-            ['nip' => '198506011990', 'nama_dosen' => 'Riswandi Azminuddin', 'username' => 'riswandi', 'password' => bcrypt('riswandi')],
+            ['nip' => '198506011990', 'nama_dosen' => 'Riswandi/Azminuddin', 'username' => 'riswandi', 'password' => bcrypt('riswandi')],
             ['nip' => '198507011991', 'nama_dosen' => 'Muh. Agus', 'username' => 'muagus', 'password' => bcrypt('muagus')],
         ];
 
         foreach ($dosens as $dosen) {
-            if (!DB::table('dosen')->where('nip', $dosen['nip'])->exists()) {
-                DB::table('dosen')->insert($dosen);
-            }
+            DB::table('dosen')->updateOrInsert(['nip' => $dosen['nip']], $dosen);
         }
 
         // Insert Mata Kuliah
@@ -51,19 +49,19 @@ class RestoreDataSeeder extends Seeder
         // Insert Jadwal Kuliah
         $jadwals = [
             // Senin
-            ['id_mk' => 'MK001', 'hari' => 'Senin', 'jam_mulai' => '10:40', 'jam_selesai' => '12:10', 'ruangan' => 'LAB.204'],
-            ['id_mk' => 'MK002', 'hari' => 'Senin', 'jam_mulai' => '15:45', 'jam_selesai' => '17:25', 'ruangan' => 'LT-205'],
+            ['id_mk' => 'MK001', 'nip_dosen' => '198501011985', 'hari' => 'Senin', 'jam_mulai' => '10:40', 'jam_selesai' => '12:10', 'ruangan' => 'LAB.204'],
+            ['id_mk' => 'MK002', 'nip_dosen' => '198502011986', 'hari' => 'Senin', 'jam_mulai' => '15:45', 'jam_selesai' => '17:25', 'ruangan' => 'LT-205'],
             // Selasa
-            ['id_mk' => 'MK003', 'hari' => 'Selasa', 'jam_mulai' => '11:00', 'jam_selesai' => '12:40', 'ruangan' => 'LT4-RUANG-01'],
-            ['id_mk' => 'MK004', 'hari' => 'Selasa', 'jam_mulai' => '14:00', 'jam_selesai' => '15:40', 'ruangan' => 'LT-203'],
-            ['id_mk' => 'MK005', 'hari' => 'Selasa', 'jam_mulai' => '15:45', 'jam_selesai' => '17:25', 'ruangan' => 'LT-205'],
-            ['id_mk' => 'MK003', 'hari' => 'Selasa', 'jam_mulai' => '16:40', 'jam_selesai' => '18:10', 'ruangan' => 'LAB.204/205'],
+            ['id_mk' => 'MK003', 'nip_dosen' => '198503011987', 'hari' => 'Selasa', 'jam_mulai' => '11:00', 'jam_selesai' => '12:40', 'ruangan' => 'LT4-RUANG-01'],
+            ['id_mk' => 'MK004', 'nip_dosen' => '198502011986', 'hari' => 'Selasa', 'jam_mulai' => '14:00', 'jam_selesai' => '15:40', 'ruangan' => 'LT-203'],
+            ['id_mk' => 'MK005', 'nip_dosen' => '198504011988', 'hari' => 'Selasa', 'jam_mulai' => '15:45', 'jam_selesai' => '17:25', 'ruangan' => 'LT-205'],
+            ['id_mk' => 'MK003', 'nip_dosen' => '198503011987', 'hari' => 'Selasa', 'jam_mulai' => '16:40', 'jam_selesai' => '18:10', 'ruangan' => 'LAB.204/205'],
             // Rabu
-            ['id_mk' => 'MK001', 'hari' => 'Rabu', 'jam_mulai' => '09:15', 'jam_selesai' => '10:55', 'ruangan' => 'LT4-RUANG-01'],
-            ['id_mk' => 'MK006', 'hari' => 'Rabu', 'jam_mulai' => '11:00', 'jam_selesai' => '12:40', 'ruangan' => 'LT-201'],
+            ['id_mk' => 'MK001', 'nip_dosen' => '198501011985', 'hari' => 'Rabu', 'jam_mulai' => '09:15', 'jam_selesai' => '10:55', 'ruangan' => 'LT4-RUANG-01'],
+            ['id_mk' => 'MK006', 'nip_dosen' => '198505011989', 'hari' => 'Rabu', 'jam_mulai' => '11:00', 'jam_selesai' => '12:40', 'ruangan' => 'LT-201'],
             // Kamis
-            ['id_mk' => 'MK007', 'hari' => 'Kamis', 'jam_mulai' => '14:00', 'jam_selesai' => '15:40', 'ruangan' => 'LT-203'],
-            ['id_mk' => 'MK008', 'hari' => 'Kamis', 'jam_mulai' => '15:45', 'jam_selesai' => '17:25', 'ruangan' => 'LT-201'],
+            ['id_mk' => 'MK007', 'nip_dosen' => '198506011990', 'hari' => 'Kamis', 'jam_mulai' => '14:00', 'jam_selesai' => '15:40', 'ruangan' => 'LT-203'],
+            ['id_mk' => 'MK008', 'nip_dosen' => '198507011991', 'hari' => 'Kamis', 'jam_mulai' => '15:45', 'jam_selesai' => '17:25', 'ruangan' => 'LT-201'],
         ];
 
         foreach ($jadwals as $jadwal) {
@@ -74,6 +72,12 @@ class RestoreDataSeeder extends Seeder
                 ->where('jam_mulai', $jadwal['jam_mulai'])
                 ->exists()) {
                 DB::table('jadwal_kuliah')->insert($jadwal);
+            } else {
+                DB::table('jadwal_kuliah')
+                    ->where('id_mk', $jadwal['id_mk'])
+                    ->where('hari', $jadwal['hari'])
+                    ->where('jam_mulai', $jadwal['jam_mulai'])
+                    ->update(['nip_dosen' => $jadwal['nip_dosen']]);
             }
         }
     }

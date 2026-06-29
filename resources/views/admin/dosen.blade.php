@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Dosen - Siakad App</title>
+  <title>Dosen - SiaCentral</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,8 +11,8 @@
 <body id="top">
 <aside class="sidebar">
   <a href="{{ route('admin.dashboard') }}" class="sidebar-logo">
-    <div class="logo-icon">S</div>
-    <span>Siakad App</span>
+    <div class="logo-icon"><i class="bi bi-mortarboard-fill"></i></div>
+    <span>SiaCentral</span>
   </a>
 
   <nav class="sidebar-nav">
@@ -40,6 +40,10 @@
 
         <a href="{{ route('admin.mata-kuliah.index') }}" class="nav-item">
           <i class="bi bi-book"></i> Mata Kuliah
+        </a>
+
+        <a href="{{ route('admin.jadwal-kuliah.index') }}" class="nav-item">
+          <i class="bi bi-calendar-week"></i> Jadwal Kuliah
         </a>
       </div>
     </div>

@@ -19,4 +19,9 @@ class JadwalKuliah extends Model
     {
         return $this->belongsTo(MataKuliah::class, 'id_mk', 'id_mk');
     }
+
+    public function dosen(): BelongsTo
+    {
+        return $this->belongsTo(Dosen::class, 'nip_dosen', 'nip');
+    }
 }

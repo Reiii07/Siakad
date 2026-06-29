@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Absensi Mahasiswa - Siakad App</title>
+  <title>Absensi Mahasiswa - SiaCentral</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -10,7 +10,7 @@
 </head>
 <body>
 <aside class="sidebar">
-  <div class="sidebar-logo"><div class="logo-icon">S</div><span>Siakad App</span></div>
+  <div class="sidebar-logo"><div class="logo-icon"><i class="bi bi-mortarboard-fill"></i></div><span>SiaCentral</span></div>
   <nav class="sidebar-nav">
     <a href="{{ route('mahasiswa.dashboard') }}" class="nav-item {{ request()->routeIs('mahasiswa.dashboard') ? 'active' : '' }}"><i class="bi bi-grid"></i> Dashboard</a>
     <div class="nav-label">Mahasiswa</div>

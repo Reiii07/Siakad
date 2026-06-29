@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Login Dosen - Siakad App</title>
+    <title>Login Dosen - SiaCentral</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -15,8 +15,8 @@
 <div class="login-wrapper">
     <div class="login-left">
         <div class="left-logo">
-            <div class="logo-icon">S</div>
-            <span>Siakad App</span>
+            <div class="logo-icon"><i class="bi bi-mortarboard-fill"></i></div>
+            <span>SiaCentral</span>
         </div>
 
         <div class="left-body">

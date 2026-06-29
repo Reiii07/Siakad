@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Siakad App - Dashboard</title>
+    <title>SiaCentral - Dashboard</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -14,8 +14,8 @@
 
 <aside class="sidebar">
     <a href="{{ route('admin.dashboard') }}" class="sidebar-logo">
-        <div class="logo-icon">S</div>
-        <span>Siakad App</span>
+        <div class="logo-icon"><i class="bi bi-mortarboard-fill"></i></div>
+        <span>SiaCentral</span>
     </a>
 
     <nav class="sidebar-nav">
@@ -44,6 +44,10 @@
 
                 <a href="{{ route('admin.mata-kuliah.index') }}" class="nav-item">
                     <i class="bi bi-book"></i> Mata Kuliah
+                </a>
+
+                <a href="{{ route('admin.jadwal-kuliah.index') }}" class="nav-item">
+                    <i class="bi bi-calendar-week"></i> Jadwal Kuliah
                 </a>
             </div>
         </div>
@@ -111,8 +115,16 @@
                     <i class="bi bi-journal-plus"></i>
                     Tambah Mata Kuliah
                 </a>
+                <a href="{{ route('admin.jadwal-kuliah.index') }}" class="btn-add">
+                    <i class="bi bi-calendar-plus"></i>
+                    Tambah Jadwal
+                </a>
             </div>
         </div>
+
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
         <div class="stats">
 
@@ -188,7 +200,7 @@
                         </td>
 
                         <td>
-                            <a href="#" class="action-btn edit">
+                            <a href="{{ route('admin.mahasiswa.edit', $row) }}" class="action-btn edit">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
 

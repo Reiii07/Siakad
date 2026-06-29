@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DosenController;
 use App\Http\Controllers\Mahasiswa\JadwalController;
 use App\Http\Controllers\Admin\MahasiswaController;
+use App\Http\Controllers\Admin\JadwalKuliahController;
 use App\Http\Controllers\Admin\MataKuliahController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PengaturanController;
@@ -52,6 +53,10 @@ Route::middleware('role:admin')->group(function () {
         ->name('admin.mahasiswa.create');
     Route::post('/mahasiswa', [MahasiswaController::class, 'store'])
         ->name('admin.mahasiswa.store');
+    Route::get('/mahasiswa/{mahasiswa}/edit', [MahasiswaController::class, 'edit'])
+        ->name('admin.mahasiswa.edit');
+    Route::put('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'update'])
+        ->name('admin.mahasiswa.update');
     Route::delete('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'destroy'])
         ->name('admin.mahasiswa.destroy');
 
@@ -63,6 +68,15 @@ Route::middleware('role:admin')->group(function () {
         ->name('admin.mata-kuliah.update');
     Route::delete('/mata-kuliah/{mataKuliah}', [MataKuliahController::class, 'destroy'])
         ->name('admin.mata-kuliah.destroy');
+
+    Route::get('/jadwal-kuliah', [JadwalKuliahController::class, 'index'])
+        ->name('admin.jadwal-kuliah.index');
+    Route::post('/jadwal-kuliah', [JadwalKuliahController::class, 'store'])
+        ->name('admin.jadwal-kuliah.store');
+    Route::put('/jadwal-kuliah/{jadwalKuliah}', [JadwalKuliahController::class, 'update'])
+        ->name('admin.jadwal-kuliah.update');
+    Route::delete('/jadwal-kuliah/{jadwalKuliah}', [JadwalKuliahController::class, 'destroy'])
+        ->name('admin.jadwal-kuliah.destroy');
 
     Route::get('/pengaturan', [PengaturanController::class, 'index'])
         ->name('admin.pengaturan.index');
