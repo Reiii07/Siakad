@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
-<body>
+<body class="auth-page auth-{{ $loginRole }}">
 
 <div class="login-wrapper">
     <div class="login-left">
@@ -20,31 +20,31 @@
         </div>
 
         <div class="left-body">
-            <h1>{{ $loginRole === 'dosen' ? 'Portal Dosen' : 'Portal Mahasiswa' }}</h1>
-            <p>{{ $loginRole === 'dosen' ? 'Akses dashboard pengajaran, manajemen tugas, dan absensi mahasiswa Anda.' : 'Akses dashboard akademik, absensi, dan tugas menggunakan data mahasiswa Anda.' }}</p>
+            <h1>{{ $loginRole === 'dosen' ? 'Ruang dosen' : 'Ruang mahasiswa' }}</h1>
+            <p>{{ $loginRole === 'dosen' ? 'Masuk untuk melihat jadwal mengajar, tugas, dan absensi kelas yang Anda ampu.' : 'Masuk untuk melihat jadwal, absensi, tugas, dan informasi akademik Anda.' }}</p>
         </div>
 
         <div class="left-features">
             <div class="feature-item">
                 <i class="bi bi-{{ $loginRole === 'dosen' ? 'person-badge' : 'person-check' }}"></i>
-                <span>{{ $loginRole === 'dosen' ? 'Login dengan username dosen' : 'Login dengan nama lengkap' }}</span>
+                <span>{{ $loginRole === 'dosen' ? 'Akun dosen terdaftar' : 'Gunakan nama lengkap' }}</span>
             </div>
 
             <div class="feature-item">
                 <i class="bi bi-shield-lock"></i>
-                <span>{{ $loginRole === 'dosen' ? 'Dashboard manajemen kelas' : 'Password menggunakan NIM' }}</span>
+                <span>{{ $loginRole === 'dosen' ? 'Kelola kelas dan absensi' : 'NIM sebagai kata sandi' }}</span>
             </div>
 
             <div class="feature-item">
                 <i class="bi bi-{{ $loginRole === 'dosen' ? 'graph-up' : 'speedometer2' }}"></i>
-                <span>{{ $loginRole === 'dosen' ? 'Kelola jadwal & absensi' : 'Dashboard khusus mahasiswa' }}</span>
+                <span>{{ $loginRole === 'dosen' ? 'Pantau tugas mahasiswa' : 'Informasi akademik pribadi' }}</span>
             </div>
         </div>
     </div>
 
     <div class="login-right">
-        <h2>{{ $loginRole === 'dosen' ? 'Login Dosen' : 'Login Mahasiswa' }}</h2>
-        <p>{{ $loginRole === 'dosen' ? 'Masukkan username dan password' : 'Masukkan nama lengkap dan NIM' }}</p>
+        <h2>{{ $loginRole === 'dosen' ? 'Masuk sebagai dosen' : 'Masuk sebagai mahasiswa' }}</h2>
+        <p>{{ $loginRole === 'dosen' ? 'Gunakan username dan password dosen.' : 'Gunakan nama lengkap dan NIM Anda.' }}</p>
 
         <div class="login-switch">
             <a href="{{ route('login') }}" class="{{ $loginRole === 'mahasiswa' ? 'active' : '' }}">Mahasiswa</a>
@@ -73,7 +73,7 @@
                 <label>{{ $loginRole === 'dosen' ? 'Username' : 'Nama Lengkap' }}</label>
                 <div class="input-wrap">
                     <i class="bi bi-person"></i>
-                    <input type="text" name="username" class="form-control-custom" placeholder="{{ $loginRole === 'dosen' ? 'Masukkan username' : 'Contoh: Dzul Kifly Rustam' }}" value="{{ old('username') }}" required autofocus>
+                    <input type="text" name="username" class="form-control-custom" placeholder="{{ $loginRole === 'dosen' ? 'Username dosen' : 'Contoh: Dzul Kifly Rustam' }}" value="{{ old('username') }}" required autofocus>
                 </div>
             </div>
 
@@ -81,7 +81,7 @@
                 <label>{{ $loginRole === 'dosen' ? 'Password' : 'NIM' }}</label>
                 <div class="input-wrap">
                     <i class="bi bi-lock"></i>
-                    <input type="password" name="password" id="passInput" class="form-control-custom" placeholder="{{ $loginRole === 'dosen' ? 'Masukkan password' : 'Masukkan NIM' }}" required>
+                    <input type="password" name="password" id="passInput" class="form-control-custom" placeholder="{{ $loginRole === 'dosen' ? 'Password dosen' : 'Nomor induk mahasiswa' }}" required>
                 </div>
 
                 <div class="form-hint">
@@ -92,7 +92,7 @@
 
             <button type="submit" class="btn-login">
                 <i class="bi bi-box-arrow-in-right"></i>
-                Masuk
+                Masuk ke portal
             </button>
 
         </form>

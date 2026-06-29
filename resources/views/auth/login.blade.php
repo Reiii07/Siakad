@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
-<body>
+<body class="auth-page auth-admin">
 
 <div class="login-wrapper">
     <div class="login-left">
@@ -20,31 +20,31 @@
         </div>
 
         <div class="left-body">
-            <h1>Portal Admin</h1>
-            <p>Kelola data dasar akademik untuk mahasiswa, dosen, dan mata kuliah.</p>
+            <h1>Ruang kerja admin</h1>
+            <p>Masuk untuk mengelola data akademik, jadwal, dosen, mahasiswa, dan mata kuliah dalam satu tempat.</p>
         </div>
 
         <div class="left-features">
             <div class="feature-item">
                 <i class="bi bi-people"></i>
-                <span>Manajemen Mahasiswa & Dosen</span>
+                <span>Data mahasiswa dan dosen</span>
             </div>
 
             <div class="feature-item">
                 <i class="bi bi-person-badge"></i>
-                <span>Manajemen Dosen</span>
+                <span>Jadwal dan pengampu kelas</span>
             </div>
 
             <div class="feature-item">
                 <i class="bi bi-book"></i>
-                <span>Manajemen Mata Kuliah</span>
+                <span>Mata kuliah dan pengaturan</span>
             </div>
         </div>
     </div>
 
     <div class="login-right">
-        <h2>Login Admin</h2>
-        <p>Masukkan username dan password admin</p>
+        <h2>Masuk sebagai admin</h2>
+        <p>Gunakan akun admin yang sudah terdaftar.</p>
 
         <form method="POST" action="{{ route('admin.login.post') }}">
             @csrf
@@ -60,7 +60,7 @@
                 <label>Username</label>
                 <div class="input-wrap">
                     <i class="bi bi-person"></i>
-                    <input type="text" name="username" class="form-control-custom" placeholder="Masukkan username" required autofocus>
+                    <input type="text" name="username" class="form-control-custom" placeholder="Username admin" required autofocus>
                 </div>
             </div>
 
@@ -68,7 +68,7 @@
                 <label>Password</label>
                 <div class="input-wrap">
                     <i class="bi bi-lock"></i>
-                    <input type="password" name="password" id="passInput" class="form-control-custom" placeholder="Masukkan password" required>
+                    <input type="password" name="password" id="passInput" class="form-control-custom" placeholder="Password admin" required>
                 </div>
 
                 <div class="form-hint">
@@ -79,7 +79,7 @@
 
             <button type="submit" class="btn-login">
                 <i class="bi bi-box-arrow-in-right"></i>
-                Masuk
+                Masuk ke dashboard
             </button>
 
             <div class="form-hint" style="margin-top:14px">
