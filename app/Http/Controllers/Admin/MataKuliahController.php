@@ -7,7 +7,6 @@ use App\Models\Dosen;
 use App\Models\MataKuliah;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class MataKuliahController extends Controller
@@ -20,19 +19,27 @@ class MataKuliahController extends Controller
             $editData = MataKuliah::where('id_mk', $request->query('edit'))->first();
         }
 
-        $mataKuliahList = MataKuliah::with('dosen')->orderBy('nama_mk')->get();
-        $dosenList = Dosen::orderBy('nama_dosen')->get();
+        $mataKuliahList = MataKuliah::with('dosen')
+            ->orderBy('nip_dosen')
+            ->orderBy('nama_mk')
+            ->get();
+        $dosenList = Dosen::with(['mataKuliah' => fn ($query) => $query->orderBy('nama_mk')])
+            ->withCount('mataKuliah')
+            ->orderBy('nama_dosen')
+            ->get();
+        $nextMataKuliahId = $this->generateNextMataKuliahId();
 
-        return view('admin.mata-kuliah', compact('mataKuliahList', 'dosenList', 'editData'));
+        return view('admin.mata-kuliah', compact('mataKuliahList', 'dosenList', 'editData', 'nextMataKuliahId'));
     }
 
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'id_mk' => ['required', 'string', 'max:20', 'unique:mata_kuliah,id_mk'],
             'nip_dosen' => ['required', 'exists:dosen,nip'],
             'nama_mk' => ['required', 'string', 'max:100'],
         ]);
+
+        $validated['id_mk'] = $this->generateNextMataKuliahId();
 
         MataKuliah::create($validated);
 
@@ -44,17 +51,11 @@ class MataKuliahController extends Controller
     public function update(Request $request, MataKuliah $mataKuliah): RedirectResponse
     {
         $validated = $request->validate([
-            'id_mk' => [
-                'required',
-                'string',
-                'max:20',
-                Rule::unique('mata_kuliah', 'id_mk')->ignore($mataKuliah->id_mk, 'id_mk'),
-            ],
             'nip_dosen' => ['required', 'exists:dosen,nip'],
             'nama_mk' => ['required', 'string', 'max:100'],
         ]);
 
-        MataKuliah::where('id_mk', $mataKuliah->id_mk)->update($validated);
+        $mataKuliah->update($validated);
 
         return redirect()
             ->route('admin.mata-kuliah.index')
@@ -68,5 +69,23 @@ class MataKuliahController extends Controller
         return redirect()
             ->route('admin.mata-kuliah.index')
             ->with('success', 'Mata kuliah berhasil dihapus!');
+    }
+
+    private function generateNextMataKuliahId(): string
+    {
+        $lastNumber = 0;
+
+        foreach (MataKuliah::pluck('id_mk') as $code) {
+            if (preg_match('/^MK(\d+)$/', (string) $code, $matches)) {
+                $lastNumber = max($lastNumber, (int) $matches[1]);
+            }
+        }
+
+        do {
+            $lastNumber++;
+            $nextCode = 'MK' . str_pad((string) $lastNumber, 3, '0', STR_PAD_LEFT);
+        } while (MataKuliah::where('id_mk', $nextCode)->exists());
+
+        return $nextCode;
     }
 }

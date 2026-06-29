@@ -13,8 +13,10 @@ class AuthController extends Controller {
         return view('auth.login');
     }
 
-    public function showMahasiswaLogin() {
-        return view('auth.login-mahasiswa');
+    public function showMahasiswaLogin(Request $request) {
+        $loginRole = $request->query('role') === 'dosen' ? 'dosen' : 'mahasiswa';
+
+        return view('auth.login-mahasiswa', compact('loginRole'));
     }
 
     public function showDosenLogin() {
@@ -25,33 +27,11 @@ class AuthController extends Controller {
         $username = $request->username;
         $password = $request->password;
 
-        // Cek admin
         $user = Admin::where('username', $username)->first();
         if ($user && Hash::check($password, $user->password)) {
             $request->session()->regenerate();
             session(['role' => 'admin', 'nama' => $user->nama, 'username' => $username]);
             return redirect()->route('admin.dashboard');
-        }
-
-        // Cek dosen
-        $user = Dosen::where('username', $username)->first();
-        if ($user && Hash::check($password, $user->password)) {
-            $request->session()->regenerate();
-            session(['role' => 'dosen', 'nama' => $user->nama_dosen, 'nip' => $user->nip, 'username' => $username]);
-            return redirect()->route('dosen.dashboard');
-        }
-
-        // Cek mahasiswa
-        $user = Mahasiswa::where('nama_mahasiswa', $username)->first();
-        if ($user && Hash::check($password, $user->password)) {
-            $request->session()->regenerate();
-            session([
-                'role' => 'mahasiswa',
-                'nama' => $user->nama_mahasiswa,
-                'username' => $user->nama_mahasiswa,
-                'nim' => $user->nim,
-            ]);
-            return redirect()->route('mahasiswa.dashboard');
         }
 
         return back()->with('error', 'Username atau password salah.');
@@ -105,6 +85,14 @@ class AuthController extends Controller {
         return back()
             ->withInput($request->only('username'))
             ->with('error', 'Username atau password salah.');
+    }
+
+    public function portalLogin(Request $request) {
+        $role = $request->input('role') === 'dosen' ? 'dosen' : 'mahasiswa';
+
+        return $role === 'dosen'
+            ? $this->dosenLogin($request)
+            : $this->mahasiswaLogin($request);
     }
 
     public function logout(Request $request) {

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Admin\AbsensiController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DosenController;
 use App\Http\Controllers\Mahasiswa\JadwalController;
@@ -10,23 +9,27 @@ use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\MataKuliahController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PengaturanController;
-use App\Http\Controllers\Admin\TugasController;
 use App\Http\Controllers\Mahasiswa\AbsensiController as MahasiswaAbsensiController;
 use App\Http\Controllers\Mahasiswa\DashboardController as MahasiswaDashboardController;
 use App\Http\Controllers\Mahasiswa\TugasController as MahasiswaTugasController;
+use App\Http\Controllers\Dosen\AbsensiController as DosenAbsensiController;
 use App\Http\Controllers\Dosen\DashboardController as DosenDashboardController;
+use App\Http\Controllers\Dosen\JadwalController as DosenJadwalController;
+use App\Http\Controllers\Dosen\TugasController as DosenTugasController;
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
 // Auth
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-Route::get('/mahasiswa/login', [AuthController::class, 'showMahasiswaLogin'])->name('mahasiswa.login');
-Route::post('/mahasiswa/login', [AuthController::class, 'mahasiswaLogin'])->name('mahasiswa.login.post');
-Route::get('/dosen/login', [AuthController::class, 'showDosenLogin'])->name('dosen.login');
-Route::post('/dosen/login', [AuthController::class, 'dosenLogin'])->name('dosen.login.post');
+Route::get('/login', [AuthController::class, 'showMahasiswaLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'portalLogin'])->name('login.post');
+Route::get('/admin/login', [AuthController::class, 'showLogin'])->name('admin.login');
+Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login.post');
+Route::get('/mahasiswa/login', fn () => redirect()->route('login'))->name('mahasiswa.login');
+Route::post('/mahasiswa/login', [AuthController::class, 'portalLogin'])->name('mahasiswa.login.post');
+Route::get('/dosen/login', fn () => redirect()->route('login', ['role' => 'dosen']))->name('dosen.login');
+Route::post('/dosen/login', [AuthController::class, 'portalLogin'])->name('dosen.login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Dashboard
@@ -61,22 +64,6 @@ Route::middleware('role:admin')->group(function () {
     Route::delete('/mata-kuliah/{mataKuliah}', [MataKuliahController::class, 'destroy'])
         ->name('admin.mata-kuliah.destroy');
 
-    Route::get('/tugas', [TugasController::class, 'index'])
-        ->name('admin.tugas.index');
-    Route::post('/tugas', [TugasController::class, 'store'])
-        ->name('admin.tugas.store');
-    Route::put('/tugas/{tugas}', [TugasController::class, 'update'])
-        ->name('admin.tugas.update');
-    Route::delete('/tugas/{tugas}', [TugasController::class, 'destroy'])
-        ->name('admin.tugas.destroy');
-
-    Route::get('/absensi', [AbsensiController::class, 'index'])
-        ->name('admin.absensi.index');
-    Route::post('/absensi', [AbsensiController::class, 'store'])
-        ->name('admin.absensi.store');
-    Route::delete('/absensi/{absensi}', [AbsensiController::class, 'destroy'])
-        ->name('admin.absensi.destroy');
-
     Route::get('/pengaturan', [PengaturanController::class, 'index'])
         ->name('admin.pengaturan.index');
 });
@@ -103,10 +90,20 @@ Route::middleware('role:mahasiswa')->prefix('mahasiswa')->name('mahasiswa.')->gr
 Route::middleware('role:dosen')->prefix('dosen')->name('dosen.')->group(function () {
     Route::get('/dashboard', [DosenDashboardController::class, 'index'])
         ->name('dashboard');
-    Route::get('/jadwal', [DosenDashboardController::class, 'index'])
+    Route::get('/jadwal', [DosenJadwalController::class, 'index'])
         ->name('jadwal.index');
-    Route::get('/tugas', [DosenDashboardController::class, 'index'])
+    Route::get('/tugas', [DosenTugasController::class, 'index'])
         ->name('tugas.index');
-    Route::get('/absensi', [DosenDashboardController::class, 'index'])
+    Route::post('/tugas', [DosenTugasController::class, 'store'])
+        ->name('tugas.store');
+    Route::put('/tugas/{tugas}', [DosenTugasController::class, 'update'])
+        ->name('tugas.update');
+    Route::delete('/tugas/{tugas}', [DosenTugasController::class, 'destroy'])
+        ->name('tugas.destroy');
+    Route::get('/absensi', [DosenAbsensiController::class, 'index'])
         ->name('absensi.index');
+    Route::post('/absensi', [DosenAbsensiController::class, 'store'])
+        ->name('absensi.store');
+    Route::delete('/absensi/{absensi}', [DosenAbsensiController::class, 'destroy'])
+        ->name('absensi.destroy');
 });

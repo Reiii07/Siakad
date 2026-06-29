@@ -44,8 +44,6 @@
       </div>
     </div>
 
-    <a href="{{ route('admin.absensi.index') }}" class="nav-item"><i class="bi bi-calendar-check"></i> Absensi</a>
-    <a href="{{ route('admin.tugas.index') }}" class="nav-item"><i class="bi bi-clipboard-check"></i> Tugas</a>
     <a href="{{ route('admin.pengaturan.index') }}" class="nav-item"><i class="bi bi-gear"></i> Pengaturan</a>
   </nav>
 </aside>
@@ -95,7 +93,7 @@
         <table>
           <thead>
           <tr>
-            <th>NIP</th>
+            <th>ID Dosen</th>
             <th>Nama Dosen</th>
             <th>Username</th>
             <th>Role</th>
@@ -168,11 +166,12 @@
             @endif
 
             <div class="form-group">
-              <label>NIP <span>*</span></label>
+              <label>ID Dosen</label>
               <div class="input-wrap">
                 <i class="bi bi-hash"></i>
-                <input type="text" name="nip" class="form-control-custom" value="{{ old('nip', $editData->nip ?? '') }}" required>
+                <input type="text" class="form-control-custom readonly-input" value="{{ $editData->nip ?? $nextDosenId }}" readonly>
               </div>
+              <div class="field-hint">{{ $editData ? 'ID tidak dapat diubah agar relasi data tetap aman.' : 'ID otomatis dibuat saat data dosen disimpan.' }}</div>
             </div>
 
             <div class="form-group">

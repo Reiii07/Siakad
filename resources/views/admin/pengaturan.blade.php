@@ -22,8 +22,6 @@
         <a href="{{ route('admin.mata-kuliah.index') }}" class="nav-item"><i class="bi bi-book"></i> Mata Kuliah</a>
       </div>
     </div>
-    <a href="{{ route('admin.absensi.index') }}" class="nav-item"><i class="bi bi-calendar-check"></i> Absensi</a>
-    <a href="{{ route('admin.tugas.index') }}" class="nav-item"><i class="bi bi-clipboard-check"></i> Tugas</a>
     <a href="{{ route('admin.pengaturan.index') }}" class="nav-item active"><i class="bi bi-gear"></i> Pengaturan</a>
   </nav>
 </aside>

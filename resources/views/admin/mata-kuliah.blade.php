@@ -22,8 +22,6 @@
         <a href="{{ route('admin.mata-kuliah.index') }}" class="nav-item active"><i class="bi bi-book"></i> Mata Kuliah</a>
       </div>
     </div>
-    <a href="{{ route('admin.absensi.index') }}" class="nav-item"><i class="bi bi-calendar-check"></i> Absensi</a>
-    <a href="{{ route('admin.tugas.index') }}" class="nav-item"><i class="bi bi-clipboard-check"></i> Tugas</a>
     <a href="{{ route('admin.pengaturan.index') }}" class="nav-item"><i class="bi bi-gear"></i> Pengaturan</a>
   </nav>
 </aside>
@@ -51,7 +49,12 @@
 
     <div class="grid-layout">
       <div class="table-card">
-        <div class="table-card-header"><h2>Daftar Mata Kuliah</h2></div>
+        <div class="table-card-header">
+          <div>
+            <h2>Daftar Mata Kuliah</h2>
+            <div class="table-subtitle">Satu dosen dapat menjadi pengampu beberapa mata kuliah.</div>
+          </div>
+        </div>
         <table>
           <thead><tr><th>ID MK</th><th>Nama Mata Kuliah</th><th>Dosen</th><th>Aksi</th></tr></thead>
           <tbody>
@@ -59,7 +62,15 @@
             <tr>
               <td><span class="badge-dosen">{{ $row->id_mk }}</span></td>
               <td>{{ $row->nama_mk }}</td>
-              <td>{{ $row->dosen->nama_dosen ?? '-' }}</td>
+              <td>
+                <div class="name-cell">
+                  <div class="avatar-sm">{{ strtoupper(substr($row->dosen->nama_dosen ?? 'D', 0, 1)) }}</div>
+                  <div>
+                    <div>{{ $row->dosen->nama_dosen ?? '-' }}</div>
+                    <div class="muted-text">{{ $row->nip_dosen }}</div>
+                  </div>
+                </div>
+              </td>
               <td>
                 <a href="{{ route('admin.mata-kuliah.index', ['edit' => $row->id_mk]) }}" class="action-btn edit"><i class="bi bi-pencil-square"></i></a>
                 <form action="{{ route('admin.mata-kuliah.destroy', $row) }}" method="POST" class="delete-form" onsubmit="return confirm('Hapus mata kuliah ini?')">
@@ -97,8 +108,9 @@
             @endif
 
             <div class="form-group">
-              <label>ID Mata Kuliah <span>*</span></label>
-              <div class="input-wrap"><i class="bi bi-hash"></i><input type="text" name="id_mk" class="form-control-custom" value="{{ old('id_mk', $editData->id_mk ?? '') }}" placeholder="MK001" required></div>
+              <label>ID Mata Kuliah</label>
+              <div class="input-wrap"><i class="bi bi-hash"></i><input type="text" class="form-control-custom readonly-input" value="{{ $editData->id_mk ?? $nextMataKuliahId }}" readonly></div>
+              <div class="field-hint">{{ $editData ? 'ID tidak dapat diubah agar data akademik tetap terhubung.' : 'ID otomatis dibuat saat mata kuliah disimpan.' }}</div>
             </div>
 
             <div class="form-group">
@@ -111,9 +123,12 @@
               <select name="nip_dosen" class="form-control-custom" required>
                 <option value="">-- Pilih Dosen --</option>
                 @foreach($dosenList as $dosen)
-                  <option value="{{ $dosen->nip }}" @selected(old('nip_dosen', $editData->nip_dosen ?? '') === $dosen->nip)>{{ $dosen->nama_dosen }}</option>
+                  <option value="{{ $dosen->nip }}" @selected(old('nip_dosen', $editData->nip_dosen ?? '') === $dosen->nip)>
+                    {{ $dosen->nama_dosen }} ({{ $dosen->mata_kuliah_count }} MK)
+                  </option>
                 @endforeach
               </select>
+              <div class="field-hint">Dosen yang sama boleh dipilih lagi untuk mata kuliah lain.</div>
             </div>
           </div>
 
@@ -124,6 +139,39 @@
             <button type="submit" class="btn-save"><i class="bi bi-check-lg"></i>{{ $editData ? 'Simpan' : 'Tambah' }}</button>
           </div>
         </form>
+      </div>
+    </div>
+
+    <div class="table-card dosen-mk-card">
+      <div class="table-card-header">
+        <h2>Mata Kuliah per Dosen</h2>
+      </div>
+
+      <div class="dosen-mk-grid">
+        @forelse($dosenList as $dosen)
+          <div class="dosen-mk-item">
+            <div class="dosen-mk-head">
+              <div class="name-cell">
+                <div class="avatar-sm">{{ strtoupper(substr($dosen->nama_dosen, 0, 1)) }}</div>
+                <div>
+                  <div class="dosen-mk-name">{{ $dosen->nama_dosen }}</div>
+                  <div class="muted-text">{{ $dosen->nip }}</div>
+                </div>
+              </div>
+              <span class="badge-dosen">{{ $dosen->mata_kuliah_count }} MK</span>
+            </div>
+
+            <div class="mk-chip-list">
+              @forelse($dosen->mataKuliah as $mataKuliah)
+                <span class="mk-chip">{{ $mataKuliah->nama_mk }}</span>
+              @empty
+                <span class="muted-text">Belum mengampu mata kuliah.</span>
+              @endforelse
+            </div>
+          </div>
+        @empty
+          <div class="empty-state">Belum ada data dosen.</div>
+        @endforelse
       </div>
     </div>
   </div>

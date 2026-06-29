@@ -48,14 +48,6 @@
             </div>
         </div>
 
-        <a href="{{ route('admin.absensi.index') }}" class="nav-item">
-            <i class="bi bi-calendar-check"></i> Absensi
-        </a>
-
-        <a href="{{ route('admin.tugas.index') }}" class="nav-item">
-            <i class="bi bi-clipboard-check"></i> Tugas
-        </a>
-
         <a href="{{ route('admin.pengaturan.index') }}" class="nav-item">
             <i class="bi bi-gear"></i> Pengaturan
         </a>
@@ -106,10 +98,20 @@
         <div class="page-header">
             <h1>Dashboard</h1>
 
-            <a href="{{ route('admin.mahasiswa.create') }}" class="btn-add">
-                <i class="bi bi-plus-lg"></i>
-                Tambah Mahasiswa
-            </a>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <a href="{{ route('admin.mahasiswa.create') }}" class="btn-add">
+                    <i class="bi bi-plus-lg"></i>
+                    Tambah Mahasiswa
+                </a>
+                <a href="{{ route('admin.dosen.index') }}" class="btn-add">
+                    <i class="bi bi-person-plus"></i>
+                    Tambah Dosen
+                </a>
+                <a href="{{ route('admin.mata-kuliah.index') }}" class="btn-add">
+                    <i class="bi bi-journal-plus"></i>
+                    Tambah Mata Kuliah
+                </a>
+            </div>
         </div>
 
         <div class="stats">

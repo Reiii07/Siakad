@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Siakad App</title>
+    <title>Login Admin - Siakad App</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -20,8 +20,8 @@
         </div>
 
         <div class="left-body">
-            <h1>Sistem Informasi Akademik Terpadu</h1>
-            <p>Kelola data akademik mahasiswa, dosen, absensi, dan tugas dalam satu platform.</p>
+            <h1>Portal Admin</h1>
+            <p>Kelola data dasar akademik untuk mahasiswa, dosen, dan mata kuliah.</p>
         </div>
 
         <div class="left-features">
@@ -31,22 +31,22 @@
             </div>
 
             <div class="feature-item">
-                <i class="bi bi-calendar-check"></i>
-                <span>Absensi Digital</span>
+                <i class="bi bi-person-badge"></i>
+                <span>Manajemen Dosen</span>
             </div>
 
             <div class="feature-item">
-                <i class="bi bi-clipboard-check"></i>
-                <span>Pengumpulan Tugas</span>
+                <i class="bi bi-book"></i>
+                <span>Manajemen Mata Kuliah</span>
             </div>
         </div>
     </div>
 
     <div class="login-right">
-        <h2>Selamat Datang</h2>
-        <p>Masuk ke akun Anda</p>
+        <h2>Login Admin</h2>
+        <p>Masukkan username dan password admin</p>
 
-        <form method="POST" action="{{ route('login.post') }}">
+        <form method="POST" action="{{ route('admin.login.post') }}">
             @csrf
 
             @if(session('error'))
@@ -83,8 +83,7 @@
             </button>
 
             <div class="form-hint" style="margin-top:14px">
-                <a href="{{ route('mahasiswa.login') }}">Login khusus mahasiswa</a> | 
-                <a href="{{ route('dosen.login') }}">Login khusus dosen</a>
+                <a href="{{ route('login') }}">Kembali ke login mahasiswa</a>
             </div>
         </form>
     </div>
