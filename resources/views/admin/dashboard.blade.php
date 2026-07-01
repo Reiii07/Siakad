@@ -27,7 +27,7 @@
 
         <div>
             <div class="nav-item"
-                 onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">
+                onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">
                 <i class="bi bi-mortarboard"></i>
                 Akademik
                 <i class="bi bi-chevron-down ms-auto" style="font-size:11px"></i>
