@@ -21,23 +21,23 @@
 
         <div class="left-body">
             <h1>Ruang kerja admin</h1>
-            <p>Masuk untuk mengelola data akademik, jadwal, dosen, mahasiswa, dan mata kuliah dalam satu tempat.</p>
+            <p>Masuk untuk mengelola data akademik, jadwal, dosen, mahasiswa, & mata kuliah dalam satu tempat.</p>
         </div>
 
         <div class="left-features">
             <div class="feature-item">
                 <i class="bi bi-people"></i>
-                <span>Data mahasiswa dan dosen</span>
+                <span>Data mahasiswa & dosen</span>
             </div>
 
             <div class="feature-item">
                 <i class="bi bi-person-badge"></i>
-                <span>Jadwal dan pengampu kelas</span>
+                <span>Jadwal & pengampu kelas</span>
             </div>
 
             <div class="feature-item">
                 <i class="bi bi-book"></i>
-                <span>Mata kuliah dan pengaturan</span>
+                <span>Mata kuliah & pengaturan</span>
             </div>
         </div>
     </div>

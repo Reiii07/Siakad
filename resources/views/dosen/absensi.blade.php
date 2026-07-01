@@ -98,7 +98,7 @@
             <div class="form-group">
               <label>Mata Kuliah <span>*</span></label>
               <select name="id_mk" class="form-control-custom" required>
-                <option value="">-- Pilih Mata Kuliah --</option>
+                <option value=""> Pilih Mata Kuliah </option>
                 @foreach($mataKuliahList as $mataKuliah)
                   <option value="{{ $mataKuliah->id_mk }}" @selected(old('id_mk') === $mataKuliah->id_mk)>{{ $mataKuliah->nama_mk }}</option>
                 @endforeach
@@ -108,7 +108,7 @@
             <div class="form-group">
               <label>Mahasiswa <span>*</span></label>
               <select name="nim" class="form-control-custom" required>
-                <option value="">-- Pilih Mahasiswa --</option>
+                <option value=""> Pilih Mahasiswa </option>
                 @foreach($mahasiswaList as $mahasiswa)
                   <option value="{{ $mahasiswa->nim }}" @selected(old('nim') === $mahasiswa->nim)>{{ $mahasiswa->nama_mahasiswa }}</option>
                 @endforeach

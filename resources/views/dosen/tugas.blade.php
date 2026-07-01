@@ -93,7 +93,7 @@
             <div class="form-group">
               <label>Mata Kuliah <span>*</span></label>
               <select name="id_mk" class="form-control-custom" required>
-                <option value="">-- Pilih Mata Kuliah --</option>
+                <option value=""> Pilih Mata Kuliah </option>
                 @foreach($mataKuliahList as $mataKuliah)
                   <option value="{{ $mataKuliah->id_mk }}" @selected(old('id_mk', $editData->id_mk ?? '') === $mataKuliah->id_mk)>{{ $mataKuliah->nama_mk }}</option>
                 @endforeach

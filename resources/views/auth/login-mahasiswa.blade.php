@@ -21,7 +21,7 @@
 
         <div class="left-body">
             <h1>{{ $loginRole === 'dosen' ? 'Ruang dosen' : 'Ruang mahasiswa' }}</h1>
-            <p>{{ $loginRole === 'dosen' ? 'Masuk untuk melihat jadwal mengajar, tugas, dan absensi kelas yang Anda ampu.' : 'Masuk untuk melihat jadwal, absensi, tugas, dan informasi akademik Anda.' }}</p>
+            <p>{{ $loginRole === 'dosen' ? 'Masuk untuk melihat jadwal mengajar, tugas, & absensi kelas yang Anda ampu.' : 'Masuk untuk melihat jadwal, absensi, tugas, dan informasi akademik Anda.' }}</p>
         </div>
 
         <div class="left-features">
